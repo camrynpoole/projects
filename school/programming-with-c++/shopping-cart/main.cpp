@@ -26,11 +26,13 @@ int main() {
         cart.pant.displayPantsOptions();
         // set the pant options
         cart.pant.setPants();
-      } else {
+      } else if (itemChoice == 3) {
         // display the available shoe options
         cart.shoe.displayShoesOptions();
         // set the shoe options
         cart.shoe.setShoes();
+      } else {
+        cout << "Invalid selection" << endl;
       }
     } else if (choice == 2) {
       // display the items in the cart
@@ -38,11 +40,12 @@ int main() {
     } else if (choice == 3) {
       // display the total of the items in the cart
       // apply discount if items are 5 or more
-      cart.applyDiscount();
+      cart.displayTotal();
     } else if (choice == 4) {
       // exit the program
       cout << "Thank you for shopping with us!" << endl;
     } else {
+      // input was invalid
       cout << "Invalid input, please try again." << endl;
     }
   }

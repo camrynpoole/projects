@@ -24,6 +24,7 @@ int Clothes::displayAvailableItems() {
   return userSelection;
 }
 void Clothes::displayDiscounts() {
+  // display the discounts available
   cout << "Big Summer Blowout!!!!!!" << endl;
   cout << "Catch The Sale Before It Ends!!" << endl;
   cout << "Buy 2 or more shirts and receive 15% off" << endl;
@@ -44,17 +45,22 @@ void Shirts::displayShirtOptions() {
 }
 
 void Shirts::setShirts() {
-  int price = 25;
-  initalPrice = price * quantity;
+  // sets the price of the shirt based on the quantity
+  this->quantity = quantity;
+  int price = 25;                 // base price of shirt
+  initalPrice = price * quantity; // base price multiplied by quantity
   if (quantity >= 2) {
     // if the user purchases 2 or more shirts, they recieve 15% off
     int discount = (initalPrice * 15) / 100;
-    finalPrice = initalPrice - discount;
+    finalPrice =
+        initalPrice - discount; // substract discounted amount from price
   } else {
+    // if the user purchases less than 2 shirts, they pay the base price
     finalPrice = initalPrice;
   }
 }
 void Shirts::showShirt() {
+  // setting the shirt type based on user input
   string type = "";
   if (item == 1) {
     type = "Long Sleeve";
@@ -65,13 +71,18 @@ void Shirts::showShirt() {
   } else {
     type = "";
   }
-  cout << "You have selected " << type << " with a quantity of " << quantity
-       << " for a total of $" << finalPrice << endl;
+  if (type == "") {
+    cout << "No shirts selected" << endl;
+  } else {
+    cout << "You have selected " << type << " with a quantity of " << quantity
+         << " for a total of $" << finalPrice << endl;
+  }
 }
 int Shirts::cost() { return finalPrice; }
 
 // Pants*************************************************************
 void Pants::displayPantsOptions() {
+  // display the available pants options
   cout << "Please select a pant from the menu below." << endl;
   cout << "Jeans .............................. press 1" << endl;
   cout << "BellBottoms ........................ press 2" << endl;
@@ -81,17 +92,22 @@ void Pants::displayPantsOptions() {
   cin >> quantity;
 }
 void Pants::setPants() {
-  int price = 40;
+  // sets the price of the pants based on the quantity
+  this->quantity = quantity;
+  int price = 40; // base price of pants
   initalPrice = price * quantity;
   if (quantity >= 2) {
     // if the user purchases 2 or more pants, they recieve 15% off
     int discount = (initalPrice * 15) / 100;
-    finalPrice = initalPrice - discount;
+    finalPrice =
+        initalPrice - discount; // substract the discount from base price
   } else {
+    // if the user purchases less than 2 pants, they pay the base price
     finalPrice = initalPrice;
   }
 }
 void Pants::showPants() {
+  // setting the pants type based on user input
   string type = "";
   if (item == 1) {
     type = "Jeans";
@@ -102,13 +118,18 @@ void Pants::showPants() {
   } else {
     type = "";
   }
-  cout << "You have selected " << type << " with a quantity of " << quantity
-       << " for a total of $" << finalPrice << endl;
+  if (type == "") {
+    cout << "No pants selected" << endl;
+  } else {
+    cout << "You have selected " << type << " with a quantity of " << quantity
+         << " for a total of $" << finalPrice << endl;
+  }
 }
 int Pants::cost() { return finalPrice; }
 
 // Shoes*************************************************************
 void Shoes::displayShoesOptions() {
+  // display the available shoes options
   cout << "Please select a shoe from the menu below." << endl;
   cout << "Louboutin ........................... press 1" << endl;
   cout << "DrMartens ........................... press 2" << endl;
@@ -119,11 +140,13 @@ void Shoes::displayShoesOptions() {
 }
 
 void Shoes::setShoes() {
-  int price = 50;
+  // sets the price of the shoes based on the quantity
+  this->quantity = quantity;
+  int price = 50; // base price of shoes
   initalPrice = price * quantity;
   if (quantity >= 2) {
     // if the user purchases 2 or more shoes, they recieve 1 free pair
-    int discount = price;
+    int discount = price; // remove the price of one shoe for the discount
     finalPrice = initalPrice - discount;
   } else {
     finalPrice = initalPrice;
@@ -131,6 +154,7 @@ void Shoes::setShoes() {
 }
 
 void Shoes::showShoes() {
+  // setting the shoes type based on user input
   string type = "";
   if (item == 1) {
     type = "Louboutin";
@@ -141,31 +165,38 @@ void Shoes::showShoes() {
   } else {
     type = "";
   }
-  cout << "You have selected " << type << " with a quantity of " << quantity
-       << " for a total of $" << finalPrice << endl;
+  if (type == "") {
+    cout << "No shoes selected" << endl;
+  } else {
+    cout << "You have selected " << type << " with a quantity of " << quantity
+         << " for a total of $" << finalPrice << endl;
+  }
 }
 
 int Shoes::cost() { return finalPrice; }
 
 // ShoppingCart********************************************************
 void ShoppingCart::displayItemsInCart() {
+  // display the items in the cart
   cout << "Items in Cart:" << endl;
-  pant.showPants();
-  shoe.showShoes();
-  shirt.showShirt();
+  pant.showPants();  // display the pants
+  shoe.showShoes();  // display the shoes
+  shirt.showShirt(); // display the shirt
+  // will display  "None Selected" if no items are selected
 }
+
 void ShoppingCart::displayTotal() {
+  // display the total price of the items in the cart
   int total = shirt.cost() + shoe.cost() + pant.cost();
-  std::cout << "Your total is: $" << total << std::endl;
-}
-void ShoppingCart::applyDiscount() {
+  // if the total quantity is 5 or more apply the discount
   if (shirt.quantity + shoe.quantity + pant.quantity >= 5) {
-    int total = shirt.cost() + shoe.cost() + pant.cost();
-    int discount = (total * 5) / 100;
-    cout << "You have recieved a discount of $" << discount << endl;
+    int discount = (total * 5) / 100; // discount is 5%
+    cout << "You have recieved a discount of $" << discount
+         << endl; // displays the amount saved
     total = total - discount;
-    std::cout << "Your total is: $" << total << std::endl;
+    cout << "Your total is: $" << total << endl;
   } else {
-    displayTotal();
+    // if less than 5 items are purchased, display the total with no discount
+    cout << "Your total is $" << total << endl;
   }
 }
