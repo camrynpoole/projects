@@ -1,81 +1,74 @@
 #ifndef SHOPPING_H
 #define SHOPPING_H
 #include <iostream>
+#include <string>
 
 // classes will be defined here
 
-// base class
+// Base Class************************************************
 class Clothes {
 public:
-  void setPrice(int p);
-  int getPrice();
+  int userSelection;
 
-  void setQuantity(int q);
-  int getQuantity();
-
-  void setCart(int c);
-  int getCart();
-
-private:
-  int quantity;
-  int price;
-  int cart;
+  void showMenu();
+  int displayAvailableItems();
+  void displayDiscounts();
 };
 
-// derived classes
+// Derived Classes**********************************************
 class Shirts : public Clothes {
 public:
-  void setShirt(int t, int i, int p);
-  void showMenu();
-  void setPrice();
-  int getDiscount();
-  int getFinalPrice();
-
-private:
-  int type;
   int item;
-  int price;
-  int discount;
+  int quantity;
+  int initalPrice;
   int finalPrice;
+
+  void displayShirtOptions();
+  void setShirts();
+  void showShirt();
+  int cost();
 };
 
 class Pants : public Clothes {
 public:
-  void setPant(int t, int i, int p);
-  void showMenu();
-  void setPrice();
-  void getDiscount();
-  void getFinalPrice();
-
-private:
-  int type;
   int item;
-  int price;
-  int discount;
+  int quantity;
+  int initalPrice;
   int finalPrice;
+
+  void displayPantsOptions();
+  void setPants();
+  void showPants();
+  int cost();
 };
 
 class Shoes : public Clothes {
 public:
-void setShoe(int t, int i, int p);
-void showMenu();
-void setPrice();
-void getDiscount();
-void getFinalPrice();
+  int item;
+  int quantity;
+  int initalPrice;
+  int finalPrice;
 
-private:
-int type;
-int item;
-int price;
-int discount;
-int finalPrice;
+  void displayShoesOptions();
+  void setShoes();
+  void showShoes();
+  int cost();
 };
 
-
-// class using composition
+// Composition Class*****************************************
 class ShoppingCart {
   // this class will include Shirts, Shoes, and Pants
 public:
+  Shirts shirt;
+  Shoes shoe;
+  Pants pant;
+
+  // display the items in the cart
+  void displayItemsInCart();
+  // display the total of the items in the cart
+  void displayTotal();
+  // if user has 5 or more items, they recieve 5% off
+  void applyDiscount();
 };
 
 #endif // !SHOPPING_H
