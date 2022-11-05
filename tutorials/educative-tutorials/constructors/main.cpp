@@ -19,6 +19,7 @@ public:
   // Parameterized constructor
   Date(int day, int month, int year) {
     // Using this pointer
+    // We use this pointer when argument name is the same as a data member
     this->day = day;
     this->month = month;
     this->year = year;
