@@ -1,11 +1,5 @@
 #include "racetrack.h"
-
-/** Special Weights **/
-// each space on the track will be assigned a weight
-// finish line will have a weight of 0
-// wall spaces will have a weight of 1000000
-// open spaces will be determined based on distance from finish line
-// at the start of race . each car will be at highest weight value
+#include <queue>
 
 // Wall Weight Value
 const int Racetrack::W_WALL = 1000000;
@@ -14,7 +8,16 @@ const int Racetrack::W_FINISH = 0;
 // Uninitialized Weight Value
 const int Racetrack::W_UNINIT = -1;
 
-//
+/*******************************************************/
+// Added Member Variables
+
+/* TODO: not implemented yet */
+
+// Neighbor Offset Values
+const int Racetrack::offsetX[8] = {-1, 0, 1, -1, 0, 1, -1, 1};
+const int Racetrack::offsetY[8] = {-1, -1, -1, 1, 1, 1, 0, 0};
+/*******************************************************/
+
 Racetrack::Racetrack() : track() {
   // Let the initializer list construct the track vector
   // weights can not be created until the size of the track is known
@@ -117,9 +120,68 @@ void Racetrack::initWeights() {
       } else if (toupper(track[i][j]) == 'F') {
         // Set finish line weight
         weights[i][j] = W_FINISH;
+      } else if (toupper(track[i][j]) == 'S') {
+        // Set start line weight
+        weights[i][j] = 0;
+      }
+      /*******************************************************/
+      // Added Code Here
+
+      /* TODO: Incorrect Logic Here */
+      // determine distance from finish line
+      for (int k = 0; k < height(); k++) {
+        for (int l = 0; l < width(); l++) {
+          if (toupper(track[k][l]) == 'F') {
+            // skip walls and initialized cells
+            if (weights[i][j] == W_WALL || weights[i][j] != W_UNINIT) {
+              continue;
+            }
+            // Calculate the distance from the finish line
+            weights[i][j] = abs(k - i) + abs(l - j);
+          }
+        }
       }
     }
   }
-  /** TODO: Assign Weights to blank spaces here **/
-  
+  /********************************************************/
 }
+
+/**********************************************************/
+// Added Member Functions
+
+bool Racetrack::isVisited(int x, int y) {
+  // if cell lies out of bounds return true
+  if (x < 0 || y < 0 || x >= height() || y >= width()) {
+    return true;
+  }
+  // if cell has been visited return true
+  if (visited[x][y] == true) {
+    return true;
+  }
+  return false;
+}
+
+bool Racetrack::isWall(int x, int y) {
+  // determine if cell is a wall
+  if (toupper(track[x][y]) == 'X') {
+    return true;
+  }
+  return false;
+}
+
+bool Racetrack::isFinish(int x, int y) {
+  // determine if cell is the finish line
+  if (toupper(track[x][y]) == 'F') {
+    return true;
+  }
+  return false;
+}
+
+bool Racetrack::isCar(int x, int y) {
+  // determine if cell is the car
+  if (toupper(track[x][y]) == 'C') {
+    return true;
+  }
+  return false;
+}
+/*************************************************************/

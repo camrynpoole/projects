@@ -7,25 +7,37 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
 using namespace std;
-
-/** RACETRACK CLASS **/
-
-// track will consist of:
-// open spaces - blank spaces
-// wall spaces - 'x'
-// finish line - 'F'
-
-// TODO: find somewhere to determine the winner
 
 class Racetrack {
 private:
   // The racetrack in printable form
-  vector<string> track; // NOTE: dynamically change the structure of the track
+  vector<string> track;
 
   // The race track in the form of integer weights
-  int **weights; // NOTE: weight array
+  // declare pointer (weights) on the stack
+  // points to an array of pointers on the heap
+  // the array of pointers points to an array of integers on the heap
+  int **weights;
+
+  /*********************************************/
+
+  // Added Member Variables
+
+  // declare the visited array
+  // declare pointer (visited) on the stack
+  // points to an array of pointers on the heap
+  // that pointd to an array of booleans on the heap
+  bool **visited;
+
+  /* TODO: not implemented yet */
+
+  // plan is to use variables to access neighboring elements
+  // arrays defining the 8 offsets to neighbors
+  static const int offsetX[8];
+  static const int offsetY[8];
+
+  /**********************************************/
 
   // Weight of a wall
   static const int W_WALL;
@@ -68,7 +80,7 @@ public:
   // This function exists purely for the purpose of debugging
   //@pre text file is provided and weights have been initialized
   //@post display weights of the current track
-  void displayWeights(); // NOTE: for debugging
+  void displayWeights();
 
   // Create track spaces
   //@pre text file is provided using the correct characters for the track
@@ -77,14 +89,6 @@ public:
   // NOTE: no need to change this function
   std::string replaceStrChar(string str, const string &replace, char ch);
 
-  // NOTE: changes are needed in this function
-  // weight initialization:
-  // find finish line in 2d array
-  // analyze each space around it
-  // and determine if a weight needs to be assigned
-  // ignore weight that are already assigned
-  // do this iteratively
-  // Initialize weights for the track
   //@pre text file is provided using the correct characters for the track
   //@post return weight array with the proper weights initialized
   void initWeights();
@@ -100,6 +104,31 @@ public:
   //@post Update the element located in the row/column
   // position using the character provided
   void setTrack(int x, int y, char value);
+
+  /**************************************************/
+  // Added Member Functions
+
+  // function to check if cell has been visited or not
+  // precondition: x and y are valid coordinates
+  // postcondition: returns true if cell has been visited
+  bool isVisited(int x, int y);
+
+  // determine if element is a wall
+  // precondition: x and y are valid coordinates
+  // postcondition: returns true if element is a wall
+  bool isWall(int x, int y);
+
+  // determine if element is a finish line
+  // precondition: x and y are valid coordinates
+  // postcondition: returns true if element is a finish line
+  bool isFinish(int x, int y);
+
+  // determine if element is a car
+  // precondition: x and y are valid coordinates
+  // postcondition: returns true if element is a car
+  bool isCar(int x, int y);
+
+  /************************************************/
 };
 
 /** INLINE FUNCTIONS **/

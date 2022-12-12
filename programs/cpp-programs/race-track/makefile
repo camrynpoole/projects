@@ -1,10 +1,10 @@
 all: program
 
 program: *.o
-	gcc -o program *.o
+	g++ -o program *.o 
 
 *.o: *.cpp *.h
-	gcc -c *.cpp
+	g++ -c *.cpp
 
 run: program
 	./program
