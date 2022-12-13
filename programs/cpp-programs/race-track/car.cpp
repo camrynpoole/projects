@@ -2,29 +2,35 @@
 #include <iostream>
 using namespace std;
 
-void Car::userMoveCar() {
-  setCarId(1);
-  id = getCarId();
+void Car::bestPath(int row, int column)
+{
+}
 
-  // get user input for row velocity
-  cout << "Enter row : ";
-  cin >> row;
+void Car::userMoveCar()
+{
+    setCarId(1);
+    id = getCarId();
 
-  // get user input for column velocity
-  cout << "Enter column : ";
-  cin >> column;
+    // get user input for row velocity
+    cout << "Enter row : ";
+    cin >> row;
 
-  /* Segmentation Fault Occurs Here */
+    // get user input for column velocity
+    cout << "Enter column : ";
+    cin >> column;
 
-  // move car to new location
-  setTrack(row, column, id);
+    /* Segmentation Fault Occurs Here */
 
-  // determine if car crashed
-  if (carCrash()) {
-    // if car crashed, reset velocities to 0
-    rowVelocity = 0;
-    columnVelocity = 0;
-  } else {
+    // move car to new location
+    setTrack(row, column, id);
+
+    // determine if car crashed
+    if (carCrash())
+    {
+        // if car crashed, reset velocities to 0
+        rowVelocity = 0;
+        columnVelocity = 0;
+    } else {
     // if car did not crash, calculate slope
     calculateSlope(rowVelocity, columnVelocity);
   }
